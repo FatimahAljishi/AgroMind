@@ -2,23 +2,32 @@ import "./LandingPage.css";
 import { PiPlant, PiImage, PiCamera } from "react-icons/pi";
 import { useNavigate } from "react-router-dom";
 
-function LandingPage() {const navigate = useNavigate();
+function LandingPage() {
+  const navigate = useNavigate();
 
-function handleImageUpload(event) {
-  const file = event.target.files[0];
+  async function handleImageUpload(event) {
+    const file = event.target.files[0];
 
-  if (file) {
-    const imageUrl = URL.createObjectURL(file);
-    localStorage.setItem("cropImage", imageUrl);
-    navigate("/diagnosis");
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      localStorage.setItem("cropImage", imageUrl);
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const response = await fetch("http://localhost:8000/diagnose", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      localStorage.setItem("diagnosisResult", JSON.stringify(data));
+
+      navigate("/diagnosis");
+    }
   }
-}
   return (
     <div className="phone">
-      
-
-      
-
       <section className="hero">
         <div className="logo-circle">
           <PiPlant />
@@ -34,32 +43,30 @@ function handleImageUpload(event) {
       </section>
 
       <main className="content">
-       <label className="upload-card">
-  <PiImage className="upload-icon" />
-  <h3>Upload a crop photo</h3>
-  <p>JPG or PNG · Tap to browse</p>
+        <label className="upload-card">
+          <PiImage className="upload-icon" />
+          <h3>Upload a crop photo</h3>
+          <p>JPG or PNG · Tap to browse</p>
 
-  <input
-    type="file"
-    accept="image/*"
-    onChange={handleImageUpload}
-    hidden
-  />
-</label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageUpload}
+            hidden
+          />
+        </label>
 
-        
+        <div className="button-row">
+          <button className="action-btn">
+            <PiCamera />
+            Take a photo now
+          </button>
 
-<div className="button-row">
-  <button className="action-btn">
-    <PiCamera />
-    Take a photo now
-  </button>
-
-  <button className="action-btn">
-    <PiImage />
-    Choose from gallery
-  </button>
-</div>
+          <button className="action-btn">
+            <PiImage />
+            Choose from gallery
+          </button>
+        </div>
       </main>
 
       <div className="home-indicator"></div>

@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 function DiagnosisPage() {
   const navigate = useNavigate();
   const imageUrl = localStorage.getItem("cropImage");
+  const diagnosisResult = JSON.parse(localStorage.getItem("diagnosisResult"));
 
   return (
     <div className="diagnosis-page">
@@ -35,12 +36,12 @@ function DiagnosisPage() {
         <section className="info-grid">
           <div>
             <span>CROP TYPE</span>
-            <strong>Tomato</strong>
+            <strong>{diagnosisResult?.crop}</strong>
           </div>
 
           <div>
             <span>GROWTH STAGE</span>
-            <strong>Mature</strong>
+            <strong>{diagnosisResult?.growth_stage}</strong>
           </div>
         </section>
 
@@ -48,26 +49,23 @@ function DiagnosisPage() {
           <p className="eyebrow">DIAGNOSIS RESULT</p>
 
           <div className="result-header">
-            <h2>Early Blight</h2>
-            <span className="confidence">High confidence</span>
+            <h2>{diagnosisResult?.disease_name}</h2>
+            <span className="confidence">{diagnosisResult?.confidence}</span>
           </div>
 
           <div className="tags">
-            <span>Fungal disease</span>
-            <span>Spreads quickly</span>
+            <span>{diagnosisResult?.disease_type}</span>
+            <span>{diagnosisResult?.spread_rate}</span>
           </div>
 
-          <p className="description">
-            Caused by the fungus <strong>Alternaria solani</strong>. Affects
-            leaves, stems and fruit — most common in warm, humid conditions.
-          </p>
+          <p className="description">{diagnosisResult?.explanation}</p>
 
           <h3>SYMPTOMS DETECTED</h3>
 
           <ul>
-            <li>Dark brown concentric rings on lower leaves</li>
-            <li>Yellow halo surrounding lesions</li>
-            <li>Premature leaf drop from base upward</li>
+            <li>{diagnosisResult?.symptoms?.[0]}</li>
+            <li>{diagnosisResult?.symptoms?.[1]}</li>
+            <li>{diagnosisResult?.symptoms?.[2]}</li>
           </ul>
 
           <div className="severity">
@@ -75,7 +73,7 @@ function DiagnosisPage() {
             <div className="severity-bar">
               <div></div>
             </div>
-            <strong>Moderate</strong>
+            <strong>{diagnosisResult?.severity}</strong>
           </div>
         </section>
 
