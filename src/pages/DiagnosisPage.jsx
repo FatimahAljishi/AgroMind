@@ -3,6 +3,9 @@ import { PiPlant, PiArrowLeft, PiShareNetwork } from "react-icons/pi";
 import { useNavigate } from "react-router-dom";
 
 function DiagnosisPage() {
+  const diagnosis = JSON.parse(
+  localStorage.getItem("diagnosisResult")
+   );
   const navigate = useNavigate();
   const imageUrl = localStorage.getItem("cropImage");
 
@@ -35,12 +38,12 @@ function DiagnosisPage() {
         <section className="info-grid">
           <div>
             <span>CROP TYPE</span>
-            <strong>Tomato</strong>
+            <strong>{diagnosis?.crop}</strong>
           </div>
 
           <div>
             <span>GROWTH STAGE</span>
-            <strong>Mature</strong>
+            <strong>{diagnosis?.growth_stage}</strong>
           </div>
         </section>
 
@@ -48,34 +51,31 @@ function DiagnosisPage() {
           <p className="eyebrow">DIAGNOSIS RESULT</p>
 
           <div className="result-header">
-            <h2>Early Blight</h2>
-            <span className="confidence">High confidence</span>
+            <h2>{diagnosis?.disease_name}</h2>
+            <span className="confidence">{diagnosis?.confidence}</span>
           </div>
 
           <div className="tags">
-            <span>Fungal disease</span>
-            <span>Spreads quickly</span>
+            <span>{diagnosis?.disease_type}</span>
+            <span>{diagnosis?.spread_rate}</span>
           </div>
 
           <p className="description">
-            Caused by the fungus <strong>Alternaria solani</strong>. Affects
-            leaves, stems and fruit — most common in warm, humid conditions.
+           {diagnosis?.explanation}
           </p>
-
           <h3>SYMPTOMS DETECTED</h3>
 
           <ul>
-            <li>Dark brown concentric rings on lower leaves</li>
-            <li>Yellow halo surrounding lesions</li>
-            <li>Premature leaf drop from base upward</li>
+           {diagnosis?.symptoms?.map((symptom, index) => (
+           <li key={index}>{symptom}</li>
+            ))}
           </ul>
-
           <div className="severity">
             <span>Severity</span>
             <div className="severity-bar">
               <div></div>
             </div>
-            <strong>Moderate</strong>
+            <strong>{diagnosis?.severity}</strong>
           </div>
         </section>
 
