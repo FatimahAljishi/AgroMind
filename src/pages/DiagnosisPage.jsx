@@ -3,9 +3,9 @@ import { PiPlant, PiArrowLeft, PiShareNetwork } from "react-icons/pi";
 import { useNavigate } from "react-router-dom";
 
 function DiagnosisPage() {
+  const diagnosis = JSON.parse(localStorage.getItem("diagnosisResult"));
   const navigate = useNavigate();
   const imageUrl = localStorage.getItem("cropImage");
-  const diagnosisResult = JSON.parse(localStorage.getItem("diagnosisResult"));
 
   return (
     <div className="diagnosis-page">
@@ -36,12 +36,12 @@ function DiagnosisPage() {
         <section className="info-grid">
           <div>
             <span>CROP TYPE</span>
-            <strong>{diagnosisResult?.crop}</strong>
+            <strong>{diagnosis?.crop}</strong>
           </div>
 
           <div>
             <span>GROWTH STAGE</span>
-            <strong>{diagnosisResult?.growth_stage}</strong>
+            <strong>{diagnosis?.growth_stage}</strong>
           </div>
         </section>
 
@@ -49,31 +49,29 @@ function DiagnosisPage() {
           <p className="eyebrow">DIAGNOSIS RESULT</p>
 
           <div className="result-header">
-            <h2>{diagnosisResult?.disease_name}</h2>
-            <span className="confidence">{diagnosisResult?.confidence}</span>
+            <h2>{diagnosis?.disease_name}</h2>
+            <span className="confidence">{diagnosis?.confidence}</span>
           </div>
 
           <div className="tags">
-            <span>{diagnosisResult?.disease_type}</span>
-            <span>{diagnosisResult?.spread_rate}</span>
+            <span>{diagnosis?.disease_type}</span>
+            <span>{diagnosis?.spread_rate}</span>
           </div>
 
-          <p className="description">{diagnosisResult?.explanation}</p>
-
+          <p className="description">{diagnosis?.explanation}</p>
           <h3>SYMPTOMS DETECTED</h3>
 
           <ul>
-            <li>{diagnosisResult?.symptoms?.[0]}</li>
-            <li>{diagnosisResult?.symptoms?.[1]}</li>
-            <li>{diagnosisResult?.symptoms?.[2]}</li>
+            {diagnosis?.symptoms?.map((symptom, index) => (
+              <li key={index}>{symptom}</li>
+            ))}
           </ul>
-
           <div className="severity">
             <span>Severity</span>
             <div className="severity-bar">
               <div></div>
             </div>
-            <strong>{diagnosisResult?.severity}</strong>
+            <strong>{diagnosis?.severity}</strong>
           </div>
         </section>
 

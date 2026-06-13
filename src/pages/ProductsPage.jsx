@@ -50,6 +50,7 @@ function ProductCard({
 }
 
 function ProductsPage() {
+  const diagnosis = JSON.parse(localStorage.getItem("diagnosisResult"));
   return (
     <div className="products-page">
       <nav className="products-nav">
@@ -68,35 +69,33 @@ function ProductsPage() {
         <section className="products-summary">
           <PiPlant />
           <div>
-            <p>TOMATO · EARLY BLIGHT</p>
-            <h2>2 products matched to your diagnosis</h2>
+            <p>
+              {diagnosis?.crop?.toUpperCase()}
+              {" · "}
+              {diagnosis?.disease_name}
+            </p>
+            <h2>
+              {diagnosis?.recommended_products?.length || 0} products matched to
+              your diagnosis
+            </h2>
           </div>
         </section>
 
         <div className="products-grid">
-          <div>
-            <p className="product-label">PRODUCT 1 OF 2</p>
-            <ProductCard
-              name="Daconil Weatherstik"
-              badge="Best match"
-              ingredient="Chlorothalonil 54%"
-              target="Early Blight, Septoria"
-              warning="⚠️ Wear gloves, mask and eye protection. Do not apply within 7 days of harvest."
-              score={94}
-            />
-          </div>
+          {diagnosis?.recommended_products?.map((product, index) => (
+            <div key={index}>
+              <p className="product-label">PRODUCT {index + 1}</p>
 
-          <div>
-            <p className="product-label">PRODUCT 2 OF 2</p>
-            <ProductCard
-              name="Kocide 3000"
-              badge="Organic-approved"
-              ingredient="Copper hydroxide 46.1%"
-              target="Early Blight, Downy Mildew"
-              warning="⚠️ Avoid spraying during rain or high humidity. Follow label precisely."
-              score={81}
-            />
-          </div>
+              <ProductCard
+                name={product.name}
+                badge={product.product_type}
+                ingredient={product.ingredients}
+                target={diagnosis.disease_name}
+                warning="Follow label instructions."
+                score={95}
+              />
+            </div>
+          ))}
         </div>
       </main>
     </div>

@@ -8,12 +8,15 @@ function LandingPage() {
   async function handleImageUpload(event) {
     const file = event.target.files[0];
 
-    if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      localStorage.setItem("cropImage", imageUrl);
-      const formData = new FormData();
-      formData.append("file", file);
+    if (!file) return;
 
+    const imageUrl = URL.createObjectURL(file);
+    localStorage.setItem("cropImage", imageUrl);
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
       const response = await fetch("http://localhost:8000/diagnose", {
         method: "POST",
         body: formData,
@@ -21,9 +24,13 @@ function LandingPage() {
 
       const data = await response.json();
 
+      console.log("API RESULT:", data);
+
       localStorage.setItem("diagnosisResult", JSON.stringify(data));
 
       navigate("/diagnosis");
+    } catch (error) {
+      console.error(error);
     }
   }
   return (
