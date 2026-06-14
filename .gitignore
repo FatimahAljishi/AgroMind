@@ -22,3 +22,12 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+.venv/
+.env
+ProductCatalog_tran.xlsx
+venv/
+__pycache__/
+*.pyc
+.env
+product_index.pkl

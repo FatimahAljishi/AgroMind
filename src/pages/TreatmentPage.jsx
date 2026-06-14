@@ -2,9 +2,7 @@ import "./TreatmentPage.css";
 import { PiArrowLeft, PiShareNetwork } from "react-icons/pi";
 
 function TreatmentPage() {
-  const diagnosis = JSON.parse(
-  localStorage.getItem("diagnosisResult")
-);
+  const diagnosis = JSON.parse(localStorage.getItem("diagnosisResult"));
   return (
     <div className="treatment-page">
       <nav className="treatment-nav">
@@ -21,7 +19,9 @@ function TreatmentPage() {
 
       <main className="treatment-content">
         <section className="disease-summary">
-          <p>{diagnosis?.crop} · {diagnosis?.disease_type}</p>
+          <p>
+            {diagnosis?.crop} · {diagnosis?.disease_type}
+          </p>
           <h2>{diagnosis?.disease_name}</h2>
         </section>
 
@@ -40,16 +40,14 @@ function TreatmentPage() {
         <h3 className="section-title">TREATMENT STEPS</h3>
 
         <section className="steps-list">
-         {diagnosis?.treatment?.map((step, index) => (
-         <article className="step-card" key={index}>
-         <span className="step-number">
-          {index + 1}
-         </span>
+          {diagnosis?.treatment?.map((step, index) => (
+            <article className="step-card" key={index}>
+              <span className="step-number">{index + 1}</span>
 
-         <div>
-           <p>{step}</p>
-         </div>
-         </article>
+              <div>
+                <p>{step}</p>
+              </div>
+            </article>
           ))}
         </section>
       </main>

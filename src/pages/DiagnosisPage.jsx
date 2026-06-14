@@ -3,9 +3,7 @@ import { PiPlant, PiArrowLeft, PiShareNetwork } from "react-icons/pi";
 import { useNavigate } from "react-router-dom";
 
 function DiagnosisPage() {
-  const diagnosis = JSON.parse(
-  localStorage.getItem("diagnosisResult")
-   );
+  const diagnosis = JSON.parse(localStorage.getItem("diagnosisResult"));
   const navigate = useNavigate();
   const imageUrl = localStorage.getItem("cropImage");
 
@@ -60,14 +58,12 @@ function DiagnosisPage() {
             <span>{diagnosis?.spread_rate}</span>
           </div>
 
-          <p className="description">
-           {diagnosis?.explanation}
-          </p>
+          <p className="description">{diagnosis?.explanation}</p>
           <h3>SYMPTOMS DETECTED</h3>
 
           <ul>
-           {diagnosis?.symptoms?.map((symptom, index) => (
-           <li key={index}>{symptom}</li>
+            {diagnosis?.symptoms?.map((symptom, index) => (
+              <li key={index}>{symptom}</li>
             ))}
           </ul>
           <div className="severity">

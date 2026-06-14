@@ -50,10 +50,7 @@ function ProductCard({
 }
 
 function ProductsPage() {
-  
-  const diagnosis = JSON.parse(
-    localStorage.getItem("diagnosisResult")
-  );
+  const diagnosis = JSON.parse(localStorage.getItem("diagnosisResult"));
   return (
     <div className="products-page">
       <nav className="products-nav">
@@ -73,38 +70,33 @@ function ProductsPage() {
           <PiPlant />
           <div>
             <p>
-             {diagnosis?.crop?.toUpperCase()}
-             {" · "}
-             {diagnosis?.disease_name}
+              {diagnosis?.crop?.toUpperCase()}
+              {" · "}
+              {diagnosis?.disease_name}
             </p>
             <h2>
-             {diagnosis?.recommended_products?.length || 0}
-             {" "}
-             products matched to your diagnosis
-           </h2>
+              {diagnosis?.recommended_products?.length || 0} products matched to
+              your diagnosis
+            </h2>
           </div>
         </section>
 
         <div className="products-grid">
-  {diagnosis?.recommended_products?.map(
-    (product, index) => (
-      <div key={index}>
-        <p className="product-label">
-          PRODUCT {index + 1}
-        </p>
+          {diagnosis?.recommended_products?.map((product, index) => (
+            <div key={index}>
+              <p className="product-label">PRODUCT {index + 1}</p>
 
-        <ProductCard
-          name={product.name}
-          badge={product.product_type}
-          ingredient={product.ingredients}
-          target={diagnosis.disease_name}
-          warning="Follow label instructions."
-          score={95}
-        />
-      </div>
-    )
-  )}
-</div>
+              <ProductCard
+                name={product.name}
+                badge={product.product_type}
+                ingredient={product.ingredients}
+                target={diagnosis.disease_name}
+                warning="Follow label instructions."
+                score={95}
+              />
+            </div>
+          ))}
+        </div>
       </main>
     </div>
   );
