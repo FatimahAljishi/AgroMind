@@ -1,9 +1,13 @@
 import "./LandingPage.css";
 import { PiPlant, PiImage, PiCamera } from "react-icons/pi";
 import { useNavigate } from "react-router-dom";
+import { useRef } from "react";
 
 function LandingPage() {
   const navigate = useNavigate();
+
+  const galleryInputRef = useRef(null);
+  const cameraInputRef = useRef(null);
 
   async function handleImageUpload(event) {
     const file = event.target.files[0];
@@ -24,8 +28,6 @@ function LandingPage() {
 
       const data = await response.json();
 
-      console.log("API RESULT:", data);
-
       localStorage.setItem("diagnosisResult", JSON.stringify(data));
 
       navigate("/diagnosis");
@@ -33,6 +35,7 @@ function LandingPage() {
       console.error(error);
     }
   }
+
   return (
     <div className="phone">
       <section className="hero">
@@ -63,13 +66,38 @@ function LandingPage() {
           />
         </label>
 
+        <input
+          ref={cameraInputRef}
+          type="file"
+          accept="image/*"
+          capture="environment"
+          onChange={handleImageUpload}
+          hidden
+        />
+
+        <input
+          ref={galleryInputRef}
+          type="file"
+          accept="image/*"
+          onChange={handleImageUpload}
+          hidden
+        />
+
         <div className="button-row">
-          <button className="action-btn">
+          <button
+            type="button"
+            className="action-btn"
+            onClick={() => cameraInputRef.current.click()}
+          >
             <PiCamera />
             Take a photo now
           </button>
 
-          <button className="action-btn">
+          <button
+            type="button"
+            className="action-btn"
+            onClick={() => galleryInputRef.current.click()}
+          >
             <PiImage />
             Choose from gallery
           </button>
