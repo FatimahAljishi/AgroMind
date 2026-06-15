@@ -1,15 +1,8 @@
 import "./ProductsPage.css";
+import { useNavigate } from "react-router-dom";
 import { PiArrowLeft, PiShareNetwork, PiPlant } from "react-icons/pi";
 
-function ProductCard({
-  number,
-  name,
-  badge,
-  ingredient,
-  target,
-  warning,
-  score,
-}) {
+function ProductCard({ name, badge, ingredient, target, warning, score }) {
   return (
     <section className="product-card">
       <div className="product-header">
@@ -30,6 +23,7 @@ function ProductCard({
       </div>
 
       <h4>USAGE INSTRUCTIONS</h4>
+
       <ul>
         <li>Mix 1–2 ml per litre of water</li>
         <li>Spray all leaf surfaces — top and underside</li>
@@ -40,9 +34,11 @@ function ProductCard({
 
       <div className="match-score">
         <p>Match score</p>
+
         <div className="score-bar">
           <span style={{ width: `${score}%` }}></span>
         </div>
+
         <strong>{score}%</strong>
       </div>
     </section>
@@ -50,12 +46,17 @@ function ProductCard({
 }
 
 function ProductsPage() {
+  const navigate = useNavigate();
+
   const diagnosis = JSON.parse(localStorage.getItem("diagnosisResult"));
+
   return (
     <div className="products-page">
       <nav className="products-nav">
-        <PiArrowLeft />
+        <PiArrowLeft className="back-icon" onClick={() => navigate(-1)} />
+
         <h1>Recommended products</h1>
+
         <PiShareNetwork />
       </nav>
 
@@ -68,12 +69,14 @@ function ProductsPage() {
       <main className="products-content">
         <section className="products-summary">
           <PiPlant />
+
           <div>
             <p>
               {diagnosis?.crop?.toUpperCase()}
               {" · "}
               {diagnosis?.disease_name}
             </p>
+
             <h2>
               {diagnosis?.recommended_products?.length || 0} products matched to
               your diagnosis
