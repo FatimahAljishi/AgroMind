@@ -271,6 +271,9 @@ Write a complete practical treatment guide for a farmer with no agronomic traini
 - Mention the visible symptoms in your summary.
 - Use the catalog usage instructions (dilution ratios) for product_guidance.
 - Only use products listed above — never invent products.
+- You MUST return exactly one product_guidance object for every product listed in CATALOG PRODUCTS AVAILABLE.
+- Every product_guidance object MUST include the exact product_id from the catalog.
+- Do not skip any product.
 
 Respond ONLY with valid JSON — no markdown, no text outside the JSON:
 {{
@@ -496,7 +499,7 @@ class DiseaseRAG:
                 "product_type": p["product_type"],
                 "ingredients":  p["ingredients"],
                 "spec":         p["spec"],
-                "how_to_use":   g.get("how_to_use") or p["usage"],
+                "how_to_use":   g.get("how_to_use"),
                 "frequency":    g.get("frequency", "Every 7-10 days"),
                 "caution":      g.get("caution", "Follow label instructions"),
                 "match_score":  p["match_score"],

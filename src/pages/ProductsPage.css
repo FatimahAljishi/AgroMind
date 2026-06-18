@@ -229,3 +229,9 @@
   cursor: pointer;
   font-size: 24px;
 }
+
+.usage-text {
+  padding: 10px 20px;
+  margin: 0;
+  line-height: 1.6;
+}

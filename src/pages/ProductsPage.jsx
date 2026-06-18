@@ -2,7 +2,7 @@ import "./ProductsPage.css";
 import { useNavigate } from "react-router-dom";
 import { PiArrowLeft, PiShareNetwork, PiPlant } from "react-icons/pi";
 
-function ProductCard({ name, badge, ingredient, target, warning, score }) {
+function ProductCard({ name, badge, ingredient, target, warning, score, howToUse }) {
   return (
     <section className="product-card">
       <div className="product-header">
@@ -24,11 +24,7 @@ function ProductCard({ name, badge, ingredient, target, warning, score }) {
 
       <h4>USAGE INSTRUCTIONS</h4>
 
-      <ul>
-        <li>Mix 1–2 ml per litre of water</li>
-        <li>Spray all leaf surfaces — top and underside</li>
-        <li>Apply every 7–10 days during active disease</li>
-      </ul>
+      <p className="usage-text">{howToUse || "No usage instructions available."}</p>
 
       <div className="product-warning">{warning}</div>
 
@@ -96,6 +92,7 @@ function ProductsPage() {
                 target={diagnosis.disease_name}
                 warning="Follow label instructions."
                 score={95}
+                howToUse={product.how_to_use}
               />
             </div>
           ))}
