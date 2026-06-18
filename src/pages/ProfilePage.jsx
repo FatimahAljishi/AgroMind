@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import "./ProfilePage.css";
+import { useNavigate } from "react-router-dom";
 
 function ProfilePage() {
   const [user, setUser] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -41,6 +43,9 @@ function ProfilePage() {
           <strong>Member Since:</strong>{" "}
           {new Date(user.created_at).toLocaleDateString()}
         </p>
+        <button className="history-btn" onClick={() => navigate("/history")}>
+          View Scan History
+      </button>
       </main>
     </div>
   );

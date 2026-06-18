@@ -1,0 +1,19 @@
+.history-card {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+}
+
+.history-item {
+  border: 1px solid #d8e8d2;
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background-color: #f7fbf5;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.history-item:hover {
+  transform: translateY(-2px);
+}

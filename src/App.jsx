@@ -11,6 +11,8 @@ import RegisterPage from "./pages/RegisterPage";
 import CartPage from "./pages/CartPage";
 import ProfilePage from "./pages/ProfilePage";
 import ProtectedRoute from "./components/ProtectedRoute";
+import HistoryPage from "./pages/HistoryPage";
+import HistoryDetailsPage from "./pages/HistoryDetailsPage";
 
 function App() {
   return (
@@ -68,6 +70,8 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route path="/history" element={<HistoryPage />} />
+        <Route path="/history/:diagnosisId" element={<HistoryDetailsPage />} />
       </Routes>
     </BrowserRouter>
   );

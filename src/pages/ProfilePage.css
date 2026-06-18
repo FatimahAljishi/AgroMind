@@ -19,3 +19,14 @@
   color: #55705e;
   font-size: 18px;
 }
+
+.history-btn {
+  padding: 10px;
+  border: none;
+  border-radius: 12px;
+  background: #123d2a;
+  color: white;
+  cursor: pointer;
+  font-weight: 700;
+  margin-top: 1.5rem;
+}
