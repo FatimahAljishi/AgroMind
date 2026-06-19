@@ -201,12 +201,11 @@
   .result-card {
     padding: 16px;
   }
-  }
+}
 
-  .result-header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
+.result-header {
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .crop-preview {
