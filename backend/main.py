@@ -363,7 +363,7 @@ def get_products(db: Session = Depends(get_db)):
             "product_type": p.product_type,
             "crops":        p.crops,
             "ingredients":  p.ingredients,
-            "spec":         p.spec,
+            "price":         p.price,
         }
         for p in products
     ]
@@ -383,5 +383,5 @@ def get_product(product_id: str, db: Session = Depends(get_db)):
         "ingredients":  product.ingredients,
         "usage":        product.usage,
         "dilution":     product.dilution,
-        "spec":         product.spec,
+        "price":         product.price,
     }

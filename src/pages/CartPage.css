@@ -50,7 +50,7 @@
   height: 40px;
   border: none;
   border-radius: 10px;
-  background-color: #95D5B2;
+  background-color: #95d5b2;
   color: #123d2a;
   font-size: 18px;
   font-weight: 700;
@@ -81,5 +81,32 @@
 }
 
 .remove-btn:hover {
+  opacity: 0.9;
+}
+
+.cart-total {
+  color: #143524;
+  margin-top: 24px;
+  font-size: 15px;
+}
+
+.cart-footer {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.checkout-btn {
+  background-color: #2d6a4f;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.checkout-btn:hover {
   opacity: 0.9;
 }

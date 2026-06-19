@@ -453,6 +453,7 @@ class DiseaseRAG:
             "dilution":     meta.get("dilution", ""),
             "spec":         meta.get("spec", ""),
             "match_score":  round(score, 4),
+            "price":        meta.get("price"),
             "source":       "rag",
         }
 
@@ -504,6 +505,7 @@ class DiseaseRAG:
                 "caution":      g.get("caution", "Follow label instructions"),
                 "match_score":  p["match_score"],
                 "source":       p.get("source", "rag"),
+                "price":        p.get("price"),
             })
         return {
             "crop":                 crop,

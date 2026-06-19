@@ -2,7 +2,15 @@ import "./ProductsPage.css";
 import { useNavigate } from "react-router-dom";
 import { PiArrowLeft, PiShareNetwork, PiPlant } from "react-icons/pi";
 
-function ProductCard({ name, badge, ingredient, target, warning, score, howToUse }) {
+function ProductCard({
+  name,
+  badge,
+  ingredient,
+  target,
+  warning,
+  score,
+  howToUse,
+}) {
   return (
     <section className="product-card">
       <div className="product-header">
@@ -24,7 +32,9 @@ function ProductCard({ name, badge, ingredient, target, warning, score, howToUse
 
       <h4>USAGE INSTRUCTIONS</h4>
 
-      <p className="usage-text">{howToUse || "No usage instructions available."}</p>
+      <p className="usage-text">
+        {howToUse || "No usage instructions available."}
+      </p>
 
       <div className="product-warning">{warning}</div>
 
@@ -52,8 +62,6 @@ function ProductsPage() {
         <PiArrowLeft className="back-icon" onClick={() => navigate(-1)} />
 
         <h1>Recommended products</h1>
-
-        <PiShareNetwork />
       </nav>
 
       <div className="products-dots">
