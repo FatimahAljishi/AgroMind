@@ -1,27 +1,63 @@
 import "./ProductsPage.css";
-import { useNavigate } from "react-router-dom";
-import { PiArrowLeft, PiShareNetwork, PiPlant } from "react-icons/pi";
+import { Link, useNavigate } from "react-router-dom";
+import { PiArrowLeft, PiShoppingCart, PiPlant } from "react-icons/pi";
 
-function ProductCard({
-  name,
-  badge,
-  ingredient,
-  target,
-  warning,
-  score,
-  howToUse,
-}) {
+function ProductCard({ product, target }) {
+  const handleAddToCart = async () => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      alert("Please login first.");
+      window.location.href = "/login";
+      return;
+    }
+
+    const response = await fetch(
+      `http://127.0.0.1:8000/products/${product.product_id}`,
+    );
+
+    const fullProduct = await response.json();
+
+    const currentCart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    const existingItem = currentCart.find(
+      (item) => item.product_id === fullProduct.product_id,
+    );
+
+    let updatedCart;
+
+    if (existingItem) {
+      updatedCart = currentCart.map((item) =>
+        item.product_id === fullProduct.product_id
+          ? { ...item, quantity: (item.quantity || 1) + 1 }
+          : item,
+      );
+    } else {
+      updatedCart = [
+        ...currentCart,
+        {
+          ...fullProduct,
+          quantity: 1,
+        },
+      ];
+    }
+
+    localStorage.setItem("cart", JSON.stringify(updatedCart));
+
+    alert(`${fullProduct.name} added to cart`);
+  };
+
   return (
     <section className="product-card">
       <div className="product-header">
-        <h3>{name}</h3>
-        <span>{badge}</span>
+        <h3>{product.name}</h3>
+        <span>{product.product_type}</span>
       </div>
 
       <div className="product-info">
         <div>
           <p>ACTIVE INGREDIENT</p>
-          <strong>{ingredient}</strong>
+          <strong>{product.ingredients || "Not specified"}</strong>
         </div>
 
         <div>
@@ -33,20 +69,26 @@ function ProductCard({
       <h4>USAGE INSTRUCTIONS</h4>
 
       <p className="usage-text">
-        {howToUse || "No usage instructions available."}
+        {product.how_to_use || "No usage instructions available."}
       </p>
 
-      <div className="product-warning">{warning}</div>
+      <div className="product-warning">
+        {product.caution || "Follow label instructions."}
+      </div>
 
       <div className="match-score">
         <p>Match score</p>
 
         <div className="score-bar">
-          <span style={{ width: `${score}%` }}></span>
+          <span style={{ width: "95%" }}></span>
         </div>
 
-        <strong>{score}%</strong>
+        <strong>95%</strong>
       </div>
+
+      <button className="cart-btn" onClick={handleAddToCart}>
+        Add to Cart
+      </button>
     </section>
   );
 }
@@ -56,12 +98,22 @@ function ProductsPage() {
 
   const diagnosis = JSON.parse(localStorage.getItem("diagnosisResult"));
 
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  const cartCount = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+
   return (
     <div className="products-page">
       <nav className="products-nav">
         <PiArrowLeft className="back-icon" onClick={() => navigate(-1)} />
 
         <h1>Recommended products</h1>
+
+        <Link to="/cart" className="cart-icon-container">
+          <PiShoppingCart />
+
+          {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
+        </Link>
       </nav>
 
       <div className="products-dots">
@@ -93,15 +145,7 @@ function ProductsPage() {
             <div key={index}>
               <p className="product-label">PRODUCT {index + 1}</p>
 
-              <ProductCard
-                name={product.name}
-                badge={product.product_type}
-                ingredient={product.ingredients}
-                target={diagnosis.disease_name}
-                warning="Follow label instructions."
-                score={95}
-                howToUse={product.how_to_use}
-              />
+              <ProductCard product={product} target={diagnosis.disease_name} />
             </div>
           ))}
         </div>

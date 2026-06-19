@@ -8,18 +8,12 @@
   padding: 0 24px;
   background: #1a3c2e;
   color: white;
-
-  position: relative;
-
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 
 .treatment-nav h1 {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-
   font-size: 18px;
   margin: 0;
 }

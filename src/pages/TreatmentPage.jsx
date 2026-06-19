@@ -1,15 +1,26 @@
 import "./TreatmentPage.css";
-import { PiArrowLeft, PiShareNetwork } from "react-icons/pi";
-import { useNavigate } from "react-router-dom";
+import { PiArrowLeft, PiShoppingCart } from "react-icons/pi";
+import { Link, useNavigate } from "react-router-dom";
 
 function TreatmentPage() {
   const diagnosis = JSON.parse(localStorage.getItem("diagnosisResult"));
   const navigate = useNavigate();
+
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  const cartCount = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
   return (
     <div className="treatment-page">
       <nav className="treatment-nav">
         <PiArrowLeft className="back-icon" onClick={() => navigate(-1)} />
+
         <h1>Treatment guide</h1>
+
+        <Link to="/cart" className="cart-icon-container">
+          <PiShoppingCart />
+
+          {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
+        </Link>
       </nav>
 
       <div className="treatment-dots">

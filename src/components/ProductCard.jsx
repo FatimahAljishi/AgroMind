@@ -3,46 +3,42 @@ import "./ProductCard.css";
 
 function ProductCard({ product }) {
   const handleAddToCart = () => {
-  const token = localStorage.getItem("token");
+    const token = localStorage.getItem("token");
 
-  if (!token) {
-    alert("Please login first.");
-    window.location.href = "/login";
-    return;
-  }
+    if (!token) {
+      alert("Please login first.");
+      window.location.href = "/login";
+      return;
+    }
 
-  const currentCart =
-    JSON.parse(localStorage.getItem("cart")) || [];
+    const currentCart = JSON.parse(localStorage.getItem("cart")) || [];
 
-  const existingItem = currentCart.find(
-    (item) => item.product_id === product.product_id
-  );
-
-  let updatedCart;
-
-  if (existingItem) {
-    updatedCart = currentCart.map((item) =>
-      item.product_id === product.product_id
-        ? { ...item, quantity: (item.quantity || 1) + 1 }
-        : item
+    const existingItem = currentCart.find(
+      (item) => item.product_id === product.product_id,
     );
-  } else {
-    updatedCart = [
-      ...currentCart,
-      {
-        ...product,
-        quantity: 1,
-      },
-    ];
-  }
 
-  localStorage.setItem(
-    "cart",
-    JSON.stringify(updatedCart)
-  );
+    let updatedCart;
 
-  alert(`${product.name} added to cart`);
-};
+    if (existingItem) {
+      updatedCart = currentCart.map((item) =>
+        item.product_id === product.product_id
+          ? { ...item, quantity: (item.quantity || 1) + 1 }
+          : item,
+      );
+    } else {
+      updatedCart = [
+        ...currentCart,
+        {
+          ...product,
+          quantity: 1,
+        },
+      ];
+    }
+
+    localStorage.setItem("cart", JSON.stringify(updatedCart));
+
+    alert(`${product.name} added to cart`);
+  };
   return (
     <div className="product-card">
       <h3>{product.name}</h3>
@@ -60,10 +56,7 @@ function ProductCard({ product }) {
       </p>
 
       <div className="product-actions">
-        <Link
-          className="details-btn"
-          to={`/products/${product.product_id}`}
-        >
+        <Link className="details-btn" to={`/products/${product.product_id}`}>
           Learn More
         </Link>
 

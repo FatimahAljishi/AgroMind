@@ -1,17 +1,27 @@
 import "./DiagnosisPage.css";
-import { PiPlant, PiArrowLeft, PiShareNetwork } from "react-icons/pi";
-import { useNavigate } from "react-router-dom";
+import { PiPlant, PiArrowLeft, PiShoppingCart } from "react-icons/pi";
+import { Link, useNavigate } from "react-router-dom";
 
 function DiagnosisPage() {
   const diagnosis = JSON.parse(localStorage.getItem("diagnosisResult"));
   const navigate = useNavigate();
   const imageUrl = localStorage.getItem("cropImage");
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  const cartCount = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
 
   return (
     <div className="diagnosis-page">
       <nav className="nav-bar">
         <PiArrowLeft className="back-icon" onClick={() => navigate(-1)} />
+
         <h1>Plant Diagnosis</h1>
+
+        <Link to="/cart" className="cart-icon-container">
+          <PiShoppingCart />
+
+          {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
+        </Link>
       </nav>
 
       <div className="progress-dots">
