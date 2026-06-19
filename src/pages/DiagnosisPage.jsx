@@ -10,6 +10,13 @@ function DiagnosisPage() {
 
   const cartCount = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
 
+  const severityColor =
+    diagnosis?.severity_score >= 70
+      ? "#dc2626"
+      : diagnosis?.severity_score >= 30
+      ? "#d4a853"
+      : "#4CAF50";
+
   return (
     <div className="diagnosis-page">
       <nav className="nav-bar">
@@ -59,7 +66,6 @@ function DiagnosisPage() {
 
           <div className="result-header">
             <h2>{diagnosis?.disease_name}</h2>
-            <span className="confidence">{diagnosis?.confidence}</span>
           </div>
 
           <div className="tags">
@@ -68,19 +74,29 @@ function DiagnosisPage() {
           </div>
 
           <p className="description">{diagnosis?.explanation}</p>
-          <h3>SYMPTOMS DETECTED</h3>
 
+          <h3>SYMPTOMS DETECTED</h3>
           <ul>
             {diagnosis?.symptoms?.map((symptom, index) => (
               <li key={index}>{symptom}</li>
             ))}
           </ul>
+
           <div className="severity">
             <span>Severity</span>
+
             <div className="severity-bar">
-              <div></div>
+              <div
+                style={{
+                  width: `${diagnosis?.severity_score || 0}%`,
+                  background: severityColor,
+                }}
+              ></div>
             </div>
-            <strong>{diagnosis?.severity}</strong>
+
+            <strong>
+              {diagnosis?.severity} ({diagnosis?.severity_score || 0}%)
+            </strong>
           </div>
         </section>
 
