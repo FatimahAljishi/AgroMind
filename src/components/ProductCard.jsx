@@ -56,7 +56,7 @@ function ProductCard({ product }) {
       </p>
 
       <p>
-        <strong>Spec:</strong> {product.spec}
+        <strong>Price:</strong> {product.price} SAR
       </p>
 
       <div className="product-actions">

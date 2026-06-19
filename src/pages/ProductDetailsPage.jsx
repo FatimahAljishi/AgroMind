@@ -25,12 +25,21 @@ function ProductDetailsPage() {
       <main className="product-details-card">
         <h1>{product.name}</h1>
 
-        <p><strong>Type:</strong> {product.product_type}</p>
-        <p><strong>Crops:</strong> {product.crops}</p>
-        <p><strong>Ingredients:</strong> {product.ingredients}</p>
-        <p><strong>Usage:</strong> {product.usage}</p>
-        <p><strong>Dilution:</strong> {product.dilution}</p>
-        <p><strong>Spec:</strong> {product.spec}</p>
+        <p>
+          <strong>Type:</strong> {product.product_type}
+        </p>
+        <p>
+          <strong>Crops:</strong> {product.crops}
+        </p>
+        <p>
+          <strong>Ingredients:</strong> {product.ingredients}
+        </p>
+        <p>
+          <strong>Usage:</strong> {product.usage}
+        </p>
+        <p>
+          <strong>Dilution:</strong> {product.dilution}
+        </p>
       </main>
     </div>
   );

@@ -10,9 +10,8 @@ function DiagnosisPage() {
   return (
     <div className="diagnosis-page">
       <nav className="nav-bar">
-        <PiArrowLeft />
+        <PiArrowLeft className="back-icon" onClick={() => navigate(-1)} />
         <h1>Plant Diagnosis</h1>
-        <PiShareNetwork />
       </nav>
 
       <div className="progress-dots">

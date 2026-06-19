@@ -4,19 +4,24 @@
 }
 
 .nav-bar {
-  background: #1a3c2e;
-  color: white;
   height: 76px;
   padding: 0 24px;
+  background: #1a3c2e;
+  color: white;
+
+  position: relative;
+
   display: flex;
   align-items: center;
-  justify-content: space-between;
 }
 
 .nav-bar h1 {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+
   font-size: 18px;
   margin: 0;
-  font-weight: 700;
 }
 
 .progress-dots {

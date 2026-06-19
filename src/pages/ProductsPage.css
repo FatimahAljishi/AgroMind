@@ -4,19 +4,24 @@
 }
 
 .products-nav {
-  background: #1a3c2e;
-  color: white;
   height: 76px;
   padding: 0 24px;
+  background: #1a3c2e;
+  color: white;
+
+  position: relative;
 
   display: flex;
   align-items: center;
-  justify-content: space-between;
 }
 
 .products-nav h1 {
-  margin: 0;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+
   font-size: 18px;
+  margin: 0;
 }
 
 .products-dots {
@@ -31,7 +36,7 @@
   width: 28px;
   height: 4px;
   border-radius: 999px;
-  background: rgba(255,255,255,0.3);
+  background: rgba(255, 255, 255, 0.3);
 }
 
 .products-dots .active {
@@ -73,7 +78,7 @@
   margin: 4px 0 0;
   font-size: 22px;
   color: #1a2e1f;
-   padding: 28px;
+  padding: 28px;
 }
 
 .products-grid {

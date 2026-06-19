@@ -1,14 +1,15 @@
 import "./TreatmentPage.css";
 import { PiArrowLeft, PiShareNetwork } from "react-icons/pi";
+import { useNavigate } from "react-router-dom";
 
 function TreatmentPage() {
   const diagnosis = JSON.parse(localStorage.getItem("diagnosisResult"));
+  const navigate = useNavigate();
   return (
     <div className="treatment-page">
       <nav className="treatment-nav">
-        <PiArrowLeft />
+        <PiArrowLeft className="back-icon" onClick={() => navigate(-1)} />
         <h1>Treatment guide</h1>
-        <PiShareNetwork />
       </nav>
 
       <div className="treatment-dots">
