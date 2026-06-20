@@ -6,26 +6,51 @@ import "./HistoryPage.css";
 function HistoryPage() {
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [sortOrder, setSortOrder] = useState("newest");
+  const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
+
   const navigate = useNavigate();
+
+  const limit = 20;
+  const totalPages = Math.ceil(total / limit);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
 
-    fetch("http://127.0.0.1:8000/history", {
-      headers: {
-        Authorization: `Bearer ${token}`,
+    setLoading(true);
+
+    fetch(
+      `http://127.0.0.1:8000/history?skip=${
+        (page - 1) * limit
+      }&limit=${limit}&sort=${sortOrder}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       },
-    })
+    )
       .then((response) => response.json())
       .then((data) => {
-        setHistory(data);
+        setHistory(data.items);
+        setTotal(data.total);
         setLoading(false);
       })
       .catch((error) => {
         console.error("Error loading history:", error);
         setLoading(false);
       });
-  }, []);
+  }, [page, sortOrder]);
+
+  const filteredHistory = history.filter((item) => {
+    const search = searchTerm.toLowerCase();
+
+    return (
+      item.crop?.toLowerCase().includes(search) ||
+      item.disease_name?.toLowerCase().includes(search)
+    );
+  });
 
   return (
     <div className="history-page">
@@ -34,13 +59,33 @@ function HistoryPage() {
       <main className="history-card">
         <h1>Scan History</h1>
 
+        <div className="history-controls">
+          <input
+            type="text"
+            placeholder="Search crop or disease..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+
+          <select
+            value={sortOrder}
+            onChange={(e) => {
+              setSortOrder(e.target.value);
+              setPage(1);
+            }}
+          >
+            <option value="newest">Newest First</option>
+            <option value="oldest">Oldest First</option>
+          </select>
+        </div>
+
         {loading ? (
           <p>Loading history...</p>
-        ) : history.length === 0 ? (
-          <p>No scans yet.</p>
+        ) : filteredHistory.length === 0 ? (
+          <p>No scans found.</p>
         ) : (
           <div className="history-list">
-            {history.map((item) => (
+            {filteredHistory.map((item) => (
               <div
                 className="history-item"
                 key={item.diagnosis_id}
@@ -65,6 +110,25 @@ function HistoryPage() {
                 <small>{new Date(item.created_at).toLocaleString()}</small>
               </div>
             ))}
+          </div>
+        )}
+
+        {totalPages > 1 && (
+          <div className="pagination">
+            <button disabled={page === 1} onClick={() => setPage(page - 1)}>
+              Previous
+            </button>
+
+            <span>
+              Page {page} of {totalPages}
+            </span>
+
+            <button
+              disabled={page === totalPages}
+              onClick={() => setPage(page + 1)}
+            >
+              Next
+            </button>
           </div>
         )}
       </main>

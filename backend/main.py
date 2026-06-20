@@ -283,35 +283,49 @@ async def diagnose(
 
 @app.get("/history")
 def get_history(
-    skip:         int     = Query(0,  ge=0),
-    limit:        int     = Query(20, ge=1, le=100),
-    db:           Session = Depends(get_db),
-    current_user: User    = Depends(get_current_user),
+    skip: int = Query(0, ge=0),
+    limit: int = Query(20, ge=1, le=100),
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+    sort: str = Query("newest")
 ):
-    """
-    Return paginated scan history for the logged-in user.
-    Frontend: GET /history  with  Authorization: Bearer <token>
-    """
-    rows = (
-        db.query(Diagnosis)
-        .filter(Diagnosis.user_id == current_user.id)
-        .order_by(Diagnosis.created_at.desc())
-        .offset(skip)
-        .limit(limit)
-        .all()
+    query = db.query(Diagnosis).filter(
+        Diagnosis.user_id == current_user.id
     )
-    return [
-        {
-            "diagnosis_id": r.id,
-            "created_at":   r.created_at.isoformat(),
-            "crop":         r.crop,
-            "disease_name": r.disease_name,
-            "severity":     r.severity,
-            "status":       r.status,
-            "confidence":   r.confidence,
-        }
-        for r in rows
-    ]
+
+    total = query.count()
+
+    order_by_clause = (
+    Diagnosis.created_at.asc()
+    if sort == "oldest"
+    else Diagnosis.created_at.desc()
+)
+
+    rows = (
+    query
+    .order_by(order_by_clause)
+    .offset(skip)
+    .limit(limit)
+    .all()
+)
+
+    return {
+        "items": [
+            {
+                "diagnosis_id": r.id,
+                "created_at": r.created_at.isoformat(),
+                "crop": r.crop,
+                "disease_name": r.disease_name,
+                "severity": r.severity,
+                "status": r.status,
+                "confidence": r.confidence,
+            }
+            for r in rows
+        ],
+        "total": total,
+        "skip": skip,
+        "limit": limit,
+    }
 
 
 @app.get("/history/{diagnosis_id}")
