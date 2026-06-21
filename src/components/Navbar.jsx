@@ -34,9 +34,19 @@ function Navbar() {
         Authorization: `Bearer ${token}`,
       },
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          localStorage.removeItem("token");
+          setUser(null);
+          return null;
+        }
+
+        return response.json();
+      })
       .then((data) => {
-        setUser(data);
+        if (data) {
+          setUser(data);
+        }
       })
       .catch((error) => {
         console.error("Error loading user:", error);
