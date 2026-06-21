@@ -13,7 +13,7 @@ function ProductCard({ product, target }) {
     }
 
     const response = await fetch(
-      `http://127.0.0.1:8000/products/${product.product_id}`,
+      `http://98.80.119.7:8000/products/${product.product_id}`,
     );
 
     const fullProduct = await response.json();

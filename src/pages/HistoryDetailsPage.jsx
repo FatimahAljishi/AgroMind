@@ -10,7 +10,7 @@ function HistoryDetailsPage() {
   useEffect(() => {
     const token = localStorage.getItem("token");
 
-    fetch(`http://127.0.0.1:8000/history/${diagnosisId}`, {
+    fetch(`http://98.80.119.7:8000/history/${diagnosisId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

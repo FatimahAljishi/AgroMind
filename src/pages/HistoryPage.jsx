@@ -22,7 +22,7 @@ function HistoryPage() {
     setLoading(true);
 
     fetch(
-      `http://127.0.0.1:8000/history?skip=${
+      `http://98.80.119.7:8000/history?skip=${
         (page - 1) * limit
       }&limit=${limit}&sort=${sortOrder}`,
       {

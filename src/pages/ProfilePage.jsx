@@ -10,7 +10,7 @@ function ProfilePage() {
   useEffect(() => {
     const token = localStorage.getItem("token");
 
-    fetch("http://127.0.0.1:8000/auth/me", {
+    fetch("http://98.80.119.7:8000/auth/me", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
