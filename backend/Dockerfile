@@ -8,6 +8,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-RUN python ingest.py || true
-
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["sh", "-c", "test -f product_index.pkl || python ingest.py && uvicorn main:app --host 0.0.0.0 --port 8000"]
