@@ -31,7 +31,7 @@ Key features include:
 Install using:
 
 ```bash
-pip install -r ../../requirements.txt
+requirements.txt
 ```
 
 ### Accounts
