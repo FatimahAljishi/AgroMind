@@ -30,3 +30,5 @@ venv/
 __pycache__/
 *.pyc
 product_index.pkl
+02_src/backend/.env
+*.env
