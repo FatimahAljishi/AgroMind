@@ -79,7 +79,7 @@ source .venv/bin/activate
 Install dependencies:
 
 ```bash
-pip install -r ../../requirements.txt
+pip install -r requirements.txt
 ```
 
 Create a PostgreSQL database named:
