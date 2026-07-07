@@ -1,4 +1,4 @@
-# AgroMind – AI Crop Disease Diagnosis & Recommendation Platform
+# AgroMind – AI Crop Disease Diagnosis & Recommendation Platform https://agromind-by-fatimah.vercel.app/
 
 ## Project Summary
 
